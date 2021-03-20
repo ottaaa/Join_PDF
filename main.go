@@ -2,33 +2,28 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
-	"strings"
+	"index/suffixarray"
+	"os"
+	"path/filepath"
 )
 
 func main() {
-	// // 今のディレクトリの場所を取ってくるやつ
-	// dir, err := os.Getwd()
 
-	// //　表示する
-	// fmt.Println(dir)
-	// fmt.Println(err)
-
-	// ファイルの中身
-	fileInfos, err := ioutil.ReadDir("./test_pdf")
-	if err != nil {
-		fmt.Println(err)
-	}
-	// fmt.Println(fileInfos)
-
-	// PDFがあるディレクトリで↑をして絞り込みたい
-	for _, fileInfo := range fileInfos {
-		// pdfのみ出力する
-		if strings.Contains(fileInfo.Name(), ".pdf") {
-			// 型番で検索
-			if strings.Contains(fileInfo.Name(), "") {
-				fmt.Println(fileInfo.Name())
-			}
+	var modelNum =	[]string{"AAA", "AAB"}
+	filepath.Walk("./test_pdf/", func(path string, info os.FileInfo, err error) error {
+		if contains(info.Name(), modelNum){
+			fmt.Println(info.Name())
 		}
-	}
+		return nil        
+	})
+}
+
+func contains(src string, words []string) bool {
+    index := suffixarray.New([]byte(src))
+    for _, x := range words {
+        if len(index.Lookup([]byte(x), -1)) > 0 {
+            return true
+        }
+    }
+    return false
 }
