@@ -5,15 +5,17 @@ import (
 	"index/suffixarray"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func main() {
 
 	var modelNum =	[]string{"AAA", "AAB"}
 	filepath.Walk("./test_pdf/", func(path string, info os.FileInfo, err error) error {
-		if contains(info.Name(), modelNum){
+		if contains(info.Name(), modelNum) && strings.Contains (info.Name(),"pdf"){
 			fmt.Println(info.Name())
-		}
+		}    
+		
 		return nil        
 	})
 }
