@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bufio"
+	"fmt"
 	"index/suffixarray"
 	"os"
 	"path/filepath"
@@ -11,8 +13,17 @@ import (
 )
 
 func main() {
+	// 型番を聞く
+	fmt.Print("型番を半角スペース区切りで入力してください >")
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	input := scanner.Text()
+	fmt.Println("in: ", input)
+	input_arr := strings.Split(input, " ")
+	fmt.Println("in: ", input_arr)
+	// AAB000001 AAB000002
 	// 結合する型番
-	var modelNum = []string{"AAB000001", "AAB000002"}
+	var modelNum = input_arr
 	// 結合するPDFファイルのパスを取得
 	var targetPDF = getPDFPath(modelNum)
 	// 結合
