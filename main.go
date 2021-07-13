@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/dialog"
 	//"bufio"
 	//"fmt"
 	"index/suffixarray"
@@ -19,13 +21,14 @@ import (
 func main() {
 
 	a := app.New()
-	w := a.NewWindow("Hello")
-
-	hello := widget.NewLabel("Hello Fyne!")
+	a.Settings().SetTheme(&myTheme{})
+	w := a.NewWindow("PDF結合")
+	w.Resize(fyne.NewSize(600, 480))
+	hello := widget.NewLabel("csvを読み込んでください。")
 	w.SetContent(container.NewVBox(
 		hello,
 		widget.NewButton("Hi!", func() {
-			hello.SetText("Welcome :)")
+			dialog.ShowFolderOpen(func(fyne.ListableURI, error) {}, w)
 		}),
 	))
 
@@ -34,15 +37,7 @@ func main() {
 	//// TODO ビルド
 	//// GOOS=windows GOARCH=amd64 go build main.go
 	//// ビルドした後にwinでの動作検証
-	//
-	//// 型番を聞く
-	//fmt.Print("型番を半角スペース区切りで入力してください >")
-	//scanner := bufio.NewScanner(os.Stdin)
-	//scanner.Scan()
-	//input := scanner.Text()
-	//fmt.Println("in: ", input)
-	//input_arr := strings.Split(input, " ")
-	//fmt.Println("in: ", input_arr)
+
 	//// AAB000001 AAB000002
 	//// 結合する型番
 	//var modelNum = input_arr
